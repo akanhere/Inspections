@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:cp="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             x:Class="Inspections.Views.TaskDashboardView">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" 
+                   Text="Dashboard"
+                   VerticalOptions="Center"
+                   HorizontalOptions="StartAndExpand"
+                   FontFamily="Montserrat-Medium.ttf#Montserrat-Medium"       
+                   TextColor="Black"
+                   FontSize="Title"
+                   Margin="15,15,15,10"/>
+            <Label Grid.Row="1"
+                   Text="Today's Tasks"
+                   VerticalOptions="Center"
+                   HorizontalOptions="StartAndExpand"
+                   FontFamily="Montserrat-Regular.ttf#Montserrat-Regular"       
+                   TextColor="Black"
+                   FontSize="Medium"
+                   Margin="15,5,15,10"/>
+            <CollectionView Grid.Row="2"
+                            Margin="15,5,15,0"
+                            ItemsSource="{Binding Tasks}"
+                            ItemSizingStrategy="MeasureAllItems"
+                            >
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="10"/>
+                </CollectionView.ItemsLayout>
+                
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame HasShadow="True"
+                               HeightRequest="20"
+                               BackgroundColor="LightBlue"
+                               CornerRadius="15"
+                               Margin="5">
+                            <Label Text="{Binding TaskDescription}"
+                                   MaxLines="2"
+                                   FontSize="Small"
+                                   FontFamily="Montserrat-Regular.ttf#Montserrat-Regular"
+                                   LineBreakMode="TailTruncation"/>
+                        </Frame>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                
+            </CollectionView>
+            <ScrollView Grid.Row="3"
+                         Margin="15,5,15,10"
+                        HorizontalScrollBarVisibility="Always">
+            <StackLayout Orientation="Horizontal"
+                         HorizontalOptions="CenterAndExpand">
+                <Button Command="{Binding CreateUserCommand}"
+                        CornerRadius="15"
+                        FontFamily="Montserrat-Regular.ttf#Montserrat-Regular"
+                        Text="New User"
+                        WidthRequest="100"
+                        Margin="5"/>
+                <Button Command="{Binding CreateGroupCommand}"
+                        CornerRadius="15"
+                        FontFamily="Montserrat-Regular.ttf#Montserrat-Regular"
+                        Text="New Group"
+                        WidthRequest="100"
+                        Margin="5"/>
+                <Button Command="{Binding AssignTaskToUserCommand}"
+                        CornerRadius="15"
+                        FontFamily="Montserrat-Regular.ttf#Montserrat-Regular"
+                        Text="New Task"
+                        WidthRequest="100"
+                        Margin="5"/>
+            </StackLayout>
+            </ScrollView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
