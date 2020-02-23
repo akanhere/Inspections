@@ -1,4 +1,5 @@
-﻿using Inspections.Models;
+﻿using Inspections.Common;
+using Inspections.Models;
 using Inspections.Services;
 using System;
 using System.Collections.Generic;
@@ -73,10 +74,16 @@ namespace Inspections.ViewModels
         private void InitProperties()
         {
             LoadTasks();
+            GetUnassignedTasks();
+            GetInProgressTasks();
+            GetCompletedTasks();
+            LoadStats();
         }
         public User CurrentUser { get; set; }
 
         public IList<Task> Tasks { get; set; }
+
+        public ObservableCollection<ManagerTaskStatsViewModel> TaskStats { get; set; }
 
         public int TotalTasks { get; private set; }
 
@@ -97,19 +104,36 @@ namespace Inspections.ViewModels
             }
         }
 
+        private void LoadStats()
+        {
+            var statsList = new ObservableCollection<ManagerTaskStatsViewModel>
+            {
+                new ManagerTaskStatsViewModel{DisplayStatusText = "Un-Assigned", Count = TasksUnassigned.ToString(), Status = Constants.TASK_STATUS_OPEN},
+                new ManagerTaskStatsViewModel{DisplayStatusText = "Completed", Count = TasksCompletedYesterday.ToString(), Status = Constants.TASK_STATUS_COMPLETED},
+                new ManagerTaskStatsViewModel{DisplayStatusText = "In Progress", Count = TasksInProgress.ToString(), Status = Constants.TASK_STATUS_IN_PROGRESS}
+            };
+
+            TaskStats = statsList;
+
+        }
+
         private void GetUnassignedTasks()
         {
-
+            TasksUnassigned = _taskService.GetAllUnassignedTasksCount();
+            OnPropertyChanged("TasksUnassigned");
         }
 
         private void GetCompletedTasks()
         {
+            TasksCompletedYesterday = _taskService.GetAllCompletedTasks();
+            OnPropertyChanged("TasksCompletedYesterday");
 
         }
 
         private void GetInProgressTasks()
         {
-
+            TasksInProgress = _taskService.GetAllInProgressTasks();
+            OnPropertyChanged("TasksInProgress");
         }
     }
 }

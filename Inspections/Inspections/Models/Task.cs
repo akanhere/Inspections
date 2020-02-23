@@ -8,9 +8,10 @@ namespace Inspections.Models
     {
         public string ID { get; set; }
         public string TaskDescription { get; set; }
-        public string PrefferedExecutionDate { get; set; }
+        public DateTime PrefferedExecutionDate { get; set; }
         public DateTime PrefferedExecutionTime { get; set; }
         public string AssignedTo { get; set; }
 
+        public string Status { get; set; }
     }
 }
